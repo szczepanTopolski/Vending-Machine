@@ -48,8 +48,8 @@ class VendingMachineTest {
         File file = new File("src/test/resources/coinsTest.txt");
         // Act
         CoinsRepository cr = da.loadCoins(file);
-        VendingMachine vmTemp = new VendingMachine(mock(ProductRepository.class),cr);
-        boolean result = vmTemp.checkVendingMachineChangePossibility();
+        vm = new VendingMachine(mock(ProductRepository.class),cr);
+        boolean result = vm.checkVendingMachineChangePossibility();
         assertFalse(result);
     }
 
@@ -60,12 +60,13 @@ class VendingMachineTest {
         DataAccess da = new DataAccess();
         File file = new File("src/main/resources/coins.txt");
         CoinsRepository cr = da.loadCoins(file);
-        VendingMachine vmTemp = new VendingMachine(mock(ProductRepository.class),cr);
+        vm = new VendingMachine(mock(ProductRepository.class),cr);
         Coin coin = new Coin(21.21f,5.00f,value,1);
         // Act
-        vmTemp.insertCoin(coin);
-        List<Coin> change = vmTemp.calculateChange(price);
+        vm.insertCoin(coin);
+        List<Coin> change = vm.calculateChange(price);
         float actual = (float) change.stream().mapToDouble(n->n.getValue()*n.getAmount()).sum();
+        // Assert
         assertEquals(expected, actual);
     }
 

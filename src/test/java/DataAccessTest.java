@@ -40,7 +40,7 @@ class DataAccessTest {
     }
 
     @Test
-    public void loadProductsShouldReturnRepositoryWithProperLoadedCoin() {
+    public void loadCoinsShouldReturnRepositoryWithProperLoadedCoin() {
         // Arrange
         Coin expected = new Coin(21.21f,5.00f,0.05f,0);
         File file = new File("src/test/resources/coinsTest.txt");
