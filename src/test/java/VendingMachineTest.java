@@ -3,13 +3,18 @@ import model.CoinsRepository;
 import model.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.mock;
 
 class VendingMachineTest {
@@ -48,19 +53,28 @@ class VendingMachineTest {
         assertFalse(result);
     }
 
-    @Test
-    public void calculateChangeShouldReturnListOfCoinsForGivenChange() {
+    @ParameterizedTest
+    @MethodSource("valuesProvider")
+    public void calculateChangeShouldReturnListOfCoinsForGivenChange(float value, float price, float expected) {
+        // Arrange
         DataAccess da = new DataAccess();
         File file = new File("src/main/resources/coins.txt");
-        float expected = 0.20f;
-        // Act
         CoinsRepository cr = da.loadCoins(file);
         VendingMachine vmTemp = new VendingMachine(mock(ProductRepository.class),cr);
-        Coin coin = new Coin(21.21f,5.00f,0.50f,1);
+        Coin coin = new Coin(21.21f,5.00f,value,1);
+        // Act
         vmTemp.insertCoin(coin);
-        List<Coin> change = vmTemp.calculateChange(0.30f);
+        List<Coin> change = vmTemp.calculateChange(price);
         float actual = (float) change.stream().mapToDouble(n->n.getValue()*n.getAmount()).sum();
         assertEquals(expected, actual);
     }
 
+    static Stream<Arguments> valuesProvider() {
+        return Stream.of(
+                arguments(1.05f, 1.00f, 0.05f),
+                arguments(0.75f, 0.50f, 0.25f),
+                arguments(0.50f, 0.50f, 0f),
+                arguments(0.75f, 0.65f, 0.10f)
+        );
+    }
 }

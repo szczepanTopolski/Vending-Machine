@@ -58,7 +58,6 @@ public class CoinsRepository {
             totalChange.add(currentCoin.copyValues(maxCurrentCoinAmount));
             currentCoin.decreaseAmount(maxCurrentCoinAmount);
         }
-
         return totalChange;
     }
 }
