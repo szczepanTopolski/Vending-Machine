@@ -32,8 +32,7 @@ public class CoinsRepository {
         return sum.get();
     }
 
-    public boolean isChangePossible(Product product) {
-        //TODO ALGORITHM
-        return false;
+    public boolean isChangePossible() {
+        return coins.stream().filter(n->n.getValue() <= 0.5f).allMatch(n-> n.getAmount() > 0);
     }
 }

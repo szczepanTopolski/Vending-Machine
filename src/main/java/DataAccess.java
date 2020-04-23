@@ -37,9 +37,9 @@ public class DataAccess {
             Scanner scan = new Scanner(file);
             while(scan.hasNextLine()) {
                 String[] values = scan.nextLine().split(",");
-                float diameter = Float.parseFloat(values[0]);
+                float diameter = Float.parseFloat(values[2]);
                 float weight = Float.parseFloat(values[1]);
-                float price = Float.parseFloat(values[2]);
+                float price = Float.parseFloat(values[0]);
                 int amount = Integer.parseInt(values[3]);
                 coins.add(new Coin(diameter, weight, price,amount));
             }

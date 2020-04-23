@@ -4,6 +4,7 @@ import model.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ class VendingMachineTest {
     @Test
     public void insertCoinShouldAddCoinToUserCoins() {
         // Arrange
-        Coin coin = new Coin(30,40,50,60);
+        Coin coin = new Coin(30,40,50,0);
         List<Coin> expected = Arrays.asList(coin);
         // Act
         vm.insertCoin(coin);
@@ -38,8 +39,12 @@ class VendingMachineTest {
 
     @Test
     public void checkVMChangePossibilityShouldReturnFalseIfChangeIsImpossible() {
-        //TODO LOAD EMPTY COINS REPO AND TRY BUY PRODUCT AND SO ON
-        boolean result = vm.checkVendingMachineChangePossibility();
+        DataAccess da = new DataAccess();
+        File file = new File("src/test/resources/coinsTest.txt");
+        // Act
+        CoinsRepository cr = da.loadCoins(file);
+        VendingMachine vmTemp = new VendingMachine(mock(ProductRepository.class),cr);
+        boolean result = vmTemp.checkVendingMachineChangePossibility();
         assertFalse(result);
     }
 

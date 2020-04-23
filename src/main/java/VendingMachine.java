@@ -29,10 +29,6 @@ public class VendingMachine {
     }
 
     public boolean checkVendingMachineChangePossibility(){
-        for(Product product: productRepository.getProducts()){
-            if(!coinsRepository.isChangePossible(product))
-                return false;
-        }
-        return true;
+        return coinsRepository.isChangePossible();
     }
 }
