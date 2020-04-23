@@ -48,4 +48,19 @@ class VendingMachineTest {
         assertFalse(result);
     }
 
+    @Test
+    public void calculateChangeShouldReturnListOfCoinsForGivenChange() {
+        DataAccess da = new DataAccess();
+        File file = new File("src/main/resources/coins.txt");
+        float expected = 0.20f;
+        // Act
+        CoinsRepository cr = da.loadCoins(file);
+        VendingMachine vmTemp = new VendingMachine(mock(ProductRepository.class),cr);
+        Coin coin = new Coin(21.21f,5.00f,0.50f,1);
+        vmTemp.insertCoin(coin);
+        List<Coin> change = vmTemp.calculateChange(0.30f);
+        float actual = (float) change.stream().mapToDouble(n->n.getValue()*n.getAmount()).sum();
+        assertEquals(expected, actual);
+    }
+
 }

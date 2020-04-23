@@ -4,6 +4,7 @@ import model.Product;
 import model.ProductRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VendingMachine {
 
@@ -14,7 +15,7 @@ public class VendingMachine {
     VendingMachine(ProductRepository productRepository, CoinsRepository coinsRepository){
         this.productRepository = productRepository;
         this.coinsRepository = coinsRepository;
-        this.customerCoins = new CoinsRepository(new ArrayList<Coin>());
+        this.customerCoins = new CoinsRepository(new ArrayList<>());
 
     }
 
@@ -30,5 +31,9 @@ public class VendingMachine {
 
     public boolean checkVendingMachineChangePossibility(){
         return coinsRepository.isChangePossible();
+    }
+
+    public List<Coin> calculateChange(float price){
+        return coinsRepository.calculateChange(price,customerCoins);
     }
 }

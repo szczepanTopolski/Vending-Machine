@@ -30,7 +30,11 @@ public class Coin {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public Coin copyValues(int amount){
+        return new Coin(this.diameter,this.weight,this.value,amount);
+    }
+
+    public void decreaseAmount(int amount){
+        amount-= amount;
     }
 }
