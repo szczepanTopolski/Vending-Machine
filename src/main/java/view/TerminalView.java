@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import model.Coin;
 import model.Product;
 
@@ -18,19 +19,26 @@ public class TerminalView implements View {
         Product product;
         for (int i = 0; i < products.size(); i++) {
             product = products.get(i);
-            System.out.println(String.format("(%d) name: %s   price: %f", i+1, product.getName(), product.getPrice()));
+            System.out.println(String.format("(%d) name: %s   price: $ %.2f", i+1, product.getName(), product.getPrice()));
         }
     }
 
     public int getUserChoice() {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Your choice: ");
         return scanner.nextInt();
     }
 
+    public String getStringInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.next();
+    }
+
     public void displayCoins(List<Coin> coins) {
-        System.out.println("Coins inserted: ");
+        System.out.println("Coins received: ");
         for (Coin coin : coins) {
             System.out.println(coin.toString());
         }
     }
+
 }

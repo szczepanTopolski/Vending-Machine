@@ -37,4 +37,9 @@ public class Coin {
     public void decreaseAmount(int amount){
         amount-= amount;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Value: $ %.2f  Diameter: %.2f  Weight: %.2f Amount: %d",value,diameter,weight,amount);
+    }
 }

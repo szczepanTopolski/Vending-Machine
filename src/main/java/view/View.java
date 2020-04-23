@@ -10,4 +10,5 @@ public interface View {
     void displayProducts(List<Product> products);
     int getUserChoice();
     void displayCoins(List<Coin> coins);
+    String getStringInput();
 }
